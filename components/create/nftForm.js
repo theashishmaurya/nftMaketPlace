@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
 
 const NftForm = () => {
   const [file, setFile] = useState();
@@ -27,17 +26,11 @@ const NftForm = () => {
   const handleSubmit = () => {
     console.log(file, data);
   };
-  const onDrop = useCallback((acceptedFiles) => {
-    setFile(acceptedFiles[0]);
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handlefileupload = (e) => {
     setFile(e.target.files[0]);
     // console.log(e.target.files[0]);
     try {
-      // var url = URL.createObjectURL(e.target.file);
     } catch (err) {
       alert(err);
     }
@@ -68,23 +61,14 @@ const NftForm = () => {
                 sx={{
                   width: "100%",
                   height: "30vh",
-                  backgroundColor: isDragActive ? "#fafafa" : "#CADDE1",
+                  backgroundColor: "#CADDE1",
                   borderStyle: "dashed",
                   margin: "1rem 0rem",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                {...getRootProps()}
               >
-                <input
-                  style={{ display: "none" }}
-                  accept='image/*'
-                  id='contained-button-file'
-                  type='file'
-                  multiple
-                  {...getInputProps()}
-                />
                 <Typography>Your Media Here</Typography>
               </Box>
 

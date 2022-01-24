@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
@@ -19,14 +19,14 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 
-
 const NftForm = () => {
   const [file, setFile] = useState();
   const NFT_MODULE_ADDRESS = "0x0C8fe5019D3B3BaC3B9e0878080C898518E02060";
+  const Private_Key = process.env.privateKey;
+
   const [data, setData] = useState({
     name: "",
     description: "",
-    price: null,
   });
   const [url, setUrl] = useState(null);
   const [currentAddress, setCurrentAddress] = useState("");
@@ -47,29 +47,53 @@ const NftForm = () => {
   };
   const handleSubmit = async () => {
     console.log(file, data);
-
+    const web3modal = new Web3Modal({
+      providerOptions,
+    });
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
     try {
-      const web3modal = new Web3Modal({
-        providerOptions,
-      });
-      const connection = await web3modal.connect();
-      const provider = new ethers.providers.Web3Provider(connection);
-      const signer = provider.getSigner();
-
-      console.log("Signer:", signer);
-      const nft = new ThirdwebSDK(signer).getNFTModule(NFT_MODULE_ADDRESS);
-      const address = await signer.getAddress();
-      
-      setCurrentAddress(await signer.getAddress());
-      nft
-        .mintTo(address, {
+      console.log("name:", data.name);
+      console.log("Image:", await url);
+      await fetch("/api/mint", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          account: address.toString(),
           name: data.name,
           description: data.description,
-          image: url,
+          image: await url,
+        }),
+      })
+        .then((result) => {
+          return result.json();
         })
-        .then(async (metadata) => {
-          console.log("Nft Metadat:", metadata.id);
-        });
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => console.log(e));
+
+      // console.log("Signer:", signer);
+      // const wallet = new ethers.Wallet(
+      //   Private_Key,
+      //   ethers.getDefaultProvider("https://rpc-mumbai.maticvigil.com")
+      // );
+      // const nft = new ThirdwebSDK(wallet).getNFTModule(NFT_MODULE_ADDRESS);
+
+      // setCurrentAddress(await signer.getAddress());
+      // nft
+      //   .mintTo(address, {
+      //     name: data.name,
+      //     description: data.description,
+      //     image: url,
+      //   })
+      //   .then(async (metadata) => {
+      //     console.log("Nft Metadat:", metadata.id);
+      //   });
     } catch (e) {
       console.log("error while minting nft:", e);
     }
@@ -80,14 +104,12 @@ const NftForm = () => {
     // console.log(e.target.files[0]);
 
     try {
-
       const file = e.target.files[0];
       const added = await client.add(file);
       console.log("ipfs added item: ", added);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       console.log(url);
       setUrl(url);
-
     } catch (err) {
       alert(err);
     }
@@ -176,19 +198,6 @@ const NftForm = () => {
                   }}
                 />
               </Stack>
-              <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">Listing Price</Typography>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  placeholder="price"
-                  required
-                  onChange={(e) => {
-                    handleChange(e, "price");
-                  }}
-                />
-              </Stack>
             </Box>
           </Box>
           <Divider sx={{ margin: "1rem 0" }} />
@@ -197,7 +206,7 @@ const NftForm = () => {
             variant="contained"
             sx={{ margin: "1rem 0rem" }}
           >
-            Mint & List
+            Mint
           </Button>
         </FormControl>
       </Paper>

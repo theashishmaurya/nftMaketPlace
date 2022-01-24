@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,6 +19,7 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const Navbar = () => {
+  const [currentUser, setCurrentUser] = useState("");
   const providerOptions = {
     walletconnect: {
       package: WalletConnectProvider, // required
@@ -33,11 +35,15 @@ const Navbar = () => {
     const connection = await web3modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
+    setCurrentUser(await signer.getAddress());
     console.log(signer);
   };
+  useEffect(() => {
+    // ConnectWallet();
+  }, []);
   return (
-    <AppBar position='static'>
-      <Container maxWidth='xl'>
+    <AppBar position="static">
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
             sx={{
@@ -47,23 +53,28 @@ const Navbar = () => {
               alignItems: "center",
             }}
           >
-            <Stack direction='row' alignItems={"center"}>
+            <Stack direction="row" alignItems={"center"}>
               <Typography
-                variant='h6'
+                variant="h6"
                 noWrap
-                component='div'
+                component="div"
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
                 LOGO
               </Typography>
 
-              <Stack direction='row' gap={2}>
-                <a href='assets'>
+              <Stack direction="row" gap={2}>
+                <a href="assets">
                   <Typography>Assests</Typography>
                 </a>
-                <a href='create'>
+                <a href="create">
                   <Typography>Create</Typography>
                 </a>
+                {currentUser && (
+                  <a href="myCollection">
+                    <Typography>My Collection</Typography>
+                  </a>
+                )}
               </Stack>
             </Stack>
             <Box>

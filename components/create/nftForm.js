@@ -12,11 +12,13 @@ import {
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
 import { useCallback, useState } from "react";
+
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { ThirdwebSDK } from "@3rdweb/sdk";
+
 
 const NftForm = () => {
   const [file, setFile] = useState();
@@ -45,6 +47,7 @@ const NftForm = () => {
   };
   const handleSubmit = async () => {
     console.log(file, data);
+
     try {
       const web3modal = new Web3Modal({
         providerOptions,
@@ -56,7 +59,7 @@ const NftForm = () => {
       console.log("Signer:", signer);
       const nft = new ThirdwebSDK(signer).getNFTModule(NFT_MODULE_ADDRESS);
       const address = await signer.getAddress();
-
+      
       setCurrentAddress(await signer.getAddress());
       nft
         .mintTo(address, {
@@ -77,12 +80,14 @@ const NftForm = () => {
     // console.log(e.target.files[0]);
 
     try {
+
       const file = e.target.files[0];
       const added = await client.add(file);
       console.log("ipfs added item: ", added);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       console.log(url);
       setUrl(url);
+
     } catch (err) {
       alert(err);
     }

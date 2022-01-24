@@ -13,6 +13,9 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.8",
+    "@react-three/drei": "^8.6.0",
+    "@react-three/fiber": "^7.0.24",
+    "@react-three/postprocessing": "^2.1.2",
     "@walletconnect/web3-provider": "^1.7.1",
     "ethers": "^5.5.3",
     "ipfs-http-client": "^50.1.2",
@@ -20,6 +23,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-dropzone": "^11.5.1",
+    "three": "^0.136.0",
     "web3modal": "^1.9.5"
   },
   "devDependencies": {

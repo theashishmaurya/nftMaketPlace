@@ -5,7 +5,6 @@ export const AssetProvider = ({ children }) => {
   const [asset, setAsset] = useState({
     name: "",
     description: "",
-    price: null,
     image: "",
     tokenId: null,
   });

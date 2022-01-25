@@ -11,19 +11,18 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { ThirdwebSDK } from "@3rdweb/sdk";
-
+import { AssetContext } from "../context/assetContext";
 const NftForm = () => {
   const [file, setFile] = useState();
-  const NFT_MODULE_ADDRESS = "0x0C8fe5019D3B3BaC3B9e0878080C898518E02060";
-  const Private_Key = process.env.privateKey;
-
+  const { asset, setAsset } = useContext(AssetContext);
+  // console.log(asset);
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -74,26 +73,14 @@ const NftForm = () => {
         })
         .then((data) => {
           console.log(data);
+          setAsset({
+            ...asset,
+            name: data.name,
+            image: data.image,
+            tokenId: data.id,
+          });
         })
         .catch((e) => console.log(e));
-
-      // console.log("Signer:", signer);
-      // const wallet = new ethers.Wallet(
-      //   Private_Key,
-      //   ethers.getDefaultProvider("https://rpc-mumbai.maticvigil.com")
-      // );
-      // const nft = new ThirdwebSDK(wallet).getNFTModule(NFT_MODULE_ADDRESS);
-
-      // setCurrentAddress(await signer.getAddress());
-      // nft
-      //   .mintTo(address, {
-      //     name: data.name,
-      //     description: data.description,
-      //     image: url,
-      //   })
-      //   .then(async (metadata) => {
-      //     console.log("Nft Metadat:", metadata.id);
-      //   });
     } catch (e) {
       console.log("error while minting nft:", e);
     }

@@ -17,11 +17,13 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { ThirdwebSDK } from "@3rdweb/sdk";
 import { AssetContext } from "../context/assetContext";
+import { UserAddressContext } from "../context/userContext";
+import ConnectWallet from "../utils/ConnectWallet";
 const NftForm = () => {
   const [file, setFile] = useState();
   const { asset, setAsset } = useContext(AssetContext);
+  const [currentUser, setCurrentUser] = useContext(UserAddressContext);
   // console.log(asset);
   const [data, setData] = useState({
     name: "",
@@ -33,28 +35,30 @@ const NftForm = () => {
 
   const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
-  const providerOptions = {
-    /* See Provider Options Section */
-    walletconnect: {
-      package: WalletConnectProvider, // required
-      options: {
-        infuraId: "27e484dcd9e3efcfd25a83a78777cdf1", // required
-      },
-    },
-  };
+  // const providerOptions = {
+  //   /* See Provider Options Section */
+  //   walletconnect: {
+  //     package: WalletConnectProvider, // required
+  //     options: {
+  //       infuraId: "27e484dcd9e3efcfd25a83a78777cdf1", // required
+  //     },
+  //   },
+  // };
 
   const handleChange = (e, name) => {
     setData({ ...data, [name]: e.target.value });
   };
   const handleSubmit = async () => {
     console.log(file, data);
-    const web3modal = new Web3Modal({
-      providerOptions,
-    });
-    const connection = await web3modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
+    // const web3modal = new Web3Modal({
+    //   providerOptions,
+    // });
+    // const connection = await web3modal.connect();
+    // const provider = new ethers.providers.Web3Provider(connection);
+    // const signer = provider.getSigner();
+    // const address = await signer.getAddress();
+    // ConnectWallet();
+    console.log(currentUser);
     try {
       console.log("name:", data.name);
       console.log("Image:", await url);
@@ -64,7 +68,7 @@ const NftForm = () => {
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          account: address.toString(),
+          account: currentUser,
           name: data.name,
           description: data.description,
           image: await url,
@@ -118,14 +122,14 @@ const NftForm = () => {
           <Box sx={{ display: "flex" }}>
             <Box>
               <Typography
-                variant='h4'
-                fontWeight='bold'
+                variant="h4"
+                fontWeight="bold"
                 sx={{ margin: "1rem 0rem" }}
               >
                 Create New Item
               </Typography>
 
-              <Typography fontWeight='500' sx={{ margin: "1rem 0rem" }}>
+              <Typography fontWeight="500" sx={{ margin: "1rem 0rem" }}>
                 Image, Video, Audio, or 3D Model
               </Typography>
               <Box
@@ -141,7 +145,7 @@ const NftForm = () => {
                 }}
               >
                 {file ? (
-                  <img src={imgSrc} alt='img' width='100%' height='100%' />
+                  <img src={imgSrc} alt="img" width="100%" height="100%" />
                 ) : (
                   <Typography>Your Media Here</Typography>
                 )}
@@ -149,16 +153,16 @@ const NftForm = () => {
 
               <input
                 style={{ display: "none" }}
-                accept='image/*'
-                id='contained-button-file'
-                type='file'
+                accept="image/*"
+                id="contained-button-file"
+                type="file"
                 multiple
                 onChange={handlefileupload}
               />
-              <label htmlFor='contained-button-file'>
+              <label htmlFor="contained-button-file">
                 <Button
-                  variant='contained'
-                  component='span'
+                  variant="contained"
+                  component="span"
                   sx={{ margin: "1rem 0" }}
                 >
                   Upload
@@ -166,16 +170,16 @@ const NftForm = () => {
               </label>
             </Box>
             <Box sx={{ margin: "0 2rem" }}>
-              <Divider orientation='vertical' />
+              <Divider orientation="vertical" />
             </Box>
             <Box sx={{ margin: "4rem 0rem", width: "30rem" }}>
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight='bold'>Name</Typography>
+                <Typography fontWeight="bold">Name</Typography>
                 <TextField
-                  variant='outlined'
-                  size='small'
+                  variant="outlined"
+                  size="small"
                   fullWidth
-                  placeholder='name'
+                  placeholder="name"
                   required
                   onChange={(e) => {
                     handleChange(e, "name");
@@ -183,12 +187,12 @@ const NftForm = () => {
                 />
               </Stack>
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight='bold'>Description</Typography>
+                <Typography fontWeight="bold">Description</Typography>
 
                 <TextareaAutosize
                   minRows={5}
                   fullWidth
-                  placeholder='Description'
+                  placeholder="Description"
                   onChange={(e) => {
                     handleChange(e, "description");
                   }}
@@ -212,7 +216,7 @@ const NftForm = () => {
           <Divider sx={{ margin: "1rem 0" }} />
           <Button
             onClick={handleSubmit}
-            variant='contained'
+            variant="contained"
             sx={{ margin: "1rem 0rem" }}
           >
             Mint

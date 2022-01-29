@@ -66,12 +66,16 @@ const Navbar = () => {
               </Typography>
 
               <Stack direction='row' gap={2}>
-                <a href='assets'>
-                  <Typography>Assests</Typography>
-                </a>
-                <a href='create'>
-                  <Typography>Create</Typography>
-                </a>
+                <Link href='/assets'>
+                  <Typography sx={{ cursor: "pointer" }} fontWeight={"bold"}>
+                    Assests
+                  </Typography>
+                </Link>
+                <Link href='/create'>
+                  <Typography sx={{ cursor: "pointer" }} fontWeight={"bold"}>
+                    Create
+                  </Typography>
+                </Link>
                 {currentUser && (
                   <a href='myCollection'>
                     <Typography>My Collection</Typography>
@@ -81,7 +85,7 @@ const Navbar = () => {
             </Stack>
             <Stack direction='row' gap={2}>
               <Link href='/profile'>
-                <PersonIcon />
+                <PersonIcon sx={{ cursor: "pointer" }} />
               </Link>
               <AccountBalanceWalletIcon
                 onClick={ConnectWallet}

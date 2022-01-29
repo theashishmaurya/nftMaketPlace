@@ -3,23 +3,26 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { useEffect, useState } from "react";
+import { GlassContainer } from "../components/layout/container";
 const Profile = () => {
   const [value, setValue] = useState(0);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/fetchNTFOwnedBy", { method: "POST" })
-      .then((data) => data.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/fetchNTFOwnedBy", { method: "POST" , body : `${}` })
+  //     .then((data) => data.json())
+  //     .then((data) => console.log(data))
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <GlassContainer
+      sx={{ flexGrow: 1, margin: "4rem 0rem", padding: "2rem 0rem" }}
+    >
       <Box
         sx={{
           flexGrow: 1,
@@ -39,7 +42,6 @@ const Profile = () => {
       <Box
         sx={{
           width: "100%",
-          bgcolor: "background.paper",
           flexGrow: 1,
           margin: "4rem 0rem",
         }}
@@ -50,7 +52,7 @@ const Profile = () => {
           <Tab label='Your Collection' sx={{ margin: { md: "0 10rem" } }} />
         </Tabs>
       </Box>
-    </Box>
+    </GlassContainer>
   );
 };
 

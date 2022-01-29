@@ -38,3 +38,7 @@ a {
 .image-circle {
   border-radius: 50%;
 }
+
+.image-curve {
+  border-radius: 16px;
+}

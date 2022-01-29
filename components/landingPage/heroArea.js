@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import TypewriterComponent from "typewriter-effect";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { GlassContainer } from "../layout/container";
+import Image from "next/image";
 
 export const GlassButton = styled(Button)(({ theme }) => ({
   /* From https://css.glass */
@@ -16,10 +17,42 @@ export const GlassButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const Data = [
+  {
+    image: "/nftImage/BoredApe.png",
+    left: -20,
+    top: 10,
+  },
+
+  {
+    image: "/nftImage/Wierd.png",
+    left: -100,
+    top: 500,
+  },
+  {
+    image: "/nftImage/YatchApe.png",
+    left: 1000,
+    top: 500,
+  },
+  {
+    image: "/nftImage/CoolCats.png",
+    left: 1000,
+    top: -20,
+  },
+];
+
 const RandomImage = (props) => {
   return (
-    <Box sx={{ position: "absolute", left: 10, top: 60 }}>
-      <GlassContainer>Hey</GlassContainer>
+    <Box sx={{}}>
+      <GlassContainer sx={{ padding: "2rem" }}>
+        <Image
+          src={props.image}
+          alt='NftImage'
+          width={100}
+          height={100}
+          className='image-curve'
+        />
+      </GlassContainer>
     </Box>
   );
 };
@@ -37,7 +70,6 @@ const HeroArea = () => {
         margin: "2rem 0rem",
       }}
     >
-      <RandomImage />
       <Box
         sx={{
           flexGrow: 1,
@@ -77,7 +109,7 @@ const HeroArea = () => {
       </Box>
       <Stack gap={2} alignItems='center' margin='5rem'>
         <Typography variant='h6' align='center' fontWeight='Bold'>
-          To get Started
+          Get started now
         </Typography>
 
         <GlassButton
@@ -88,6 +120,28 @@ const HeroArea = () => {
           Connect your wallet
         </GlassButton>
       </Stack>
+      <Stack gap={4} alignItems={"center"} margin='2rem'>
+        <Typography variant='h4' fontWeight={"bold"}>
+          What Are NFT?
+        </Typography>
+        <Typography align='center'>
+          A non-fungible token is a non-interchangeable unit of data stored on a
+          blockchain, a form of digital ledger. Types of NFT data units may be
+          associated with digital files such as photos, videos, and audio.
+          Because each token is uniquely identifiable, NFTs differ from
+          blockchain cryptocurrencies, such as Bitcoin.
+        </Typography>
+      </Stack>
+      <Box sx={{ margin: "4rem 0rem" }}>
+        <Typography fontWeight='bold' variant='h6' sx={{ margin: "2rem 0rem" }}>
+          Some of Famous Nft&apos;s
+        </Typography>
+        <Stack direction='row' gap={6}>
+          {Data.map((data, index) => {
+            return <RandomImage {...data} key={index} />;
+          })}
+        </Stack>
+      </Box>
     </Box>
   );
 };

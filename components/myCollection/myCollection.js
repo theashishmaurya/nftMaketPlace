@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import NFTMarketPlace from "../utils/nftMarketPlace.json";
+// import NFTMarketPlace from "../utils/nftMarketPlace.json";
 import { ThirdwebSDK } from "@3rdweb/sdk";
 const UserCollection = () => {
   const [currentUser, setCurrentUser] = useState("");
@@ -19,16 +19,16 @@ const UserCollection = () => {
   const MARKETPLACE_ADDRESS = "0x3Edd5980ab00A580171AcbB05696A4Eb988ba6E7";
   const TOKEN_ADDRESS = "0x800d5c2BD0aB447ceC839Dc22A14ddA6751b8879";
 
-  const ConnectWallet = async () => {
-    const web3modal = new Web3Modal({
-      providerOptions,
-    });
-    const connection = await web3modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    setCurrentUser(await signer.getAddress());
-    console.log(signer);
-  };
+  // const ConnectWallet = async () => {
+  //   const web3modal = new Web3Modal({
+  //     providerOptions,
+  //   });
+  //   const connection = await web3modal.connect();
+  //   const provider = new ethers.providers.Web3Provider(connection);
+  //   const signer = provider.getSigner();
+  //   setCurrentUser(await signer.getAddress());
+  //   console.log(signer);
+  // };
   const getListing = async () => {
     const web3modal = new Web3Modal({
       providerOptions,
@@ -39,16 +39,24 @@ const UserCollection = () => {
     const market = new ThirdwebSDK(signer).getMarketplaceModule(
       MARKETPLACE_ADDRESS
     );
+    const nftCollection = new ThirdwebSDK(signer).getNFTModule(
+      NFT_MODULE_ADDRESS
+    );
     const tokenOffer = "1";
-    market.createDirectListing({
-      assetContractAddress: NFT_MODULE_ADDRESS,
-      buyoutPricePerToken: ethers.utils.parseUnits(tokenOffer, 18),
-      currencyContractAddress: TOKEN_ADDRESS,
-      startTimeInSeconds: Math.floor(Date.now() / 1000),
-      listingDurationInSeconds: 60 * 60 * 24,
-      tokenId: 1,
-      quantity: 1,
-    });
+    // market.createDirectListing({
+    //   assetContractAddress: NFT_MODULE_ADDRESS,
+    //   buyoutPricePerToken: ethers.utils.parseUnits(tokenOffer, 18),
+    //   currencyContractAddress: TOKEN_ADDRESS,
+    //   startTimeInSeconds: Math.floor(Date.now() / 1000),
+    //   listingDurationInSeconds: 60 * 60 * 24,
+    //   tokenId: 1,
+    //   quantity: 1,
+    // });
+
+    await nftCollection
+      .getOwned(signer.getAddress())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   };
   useEffect(() => {
     // ConnectWallet();

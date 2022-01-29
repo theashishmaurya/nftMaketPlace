@@ -11,24 +11,26 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
-import { useCallback, useState } from "react";
-
+import { useCallback, useContext, useEffect, useState } from "react";
+import Image from "next/image";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { ThirdwebSDK } from "@3rdweb/sdk";
-
+import { AssetContext } from "../context/assetContext";
 const NftForm = () => {
   const [file, setFile] = useState();
-  const NFT_MODULE_ADDRESS = "0x0C8fe5019D3B3BaC3B9e0878080C898518E02060";
+  const { asset, setAsset } = useContext(AssetContext);
+  // console.log(asset);
   const [data, setData] = useState({
     name: "",
     description: "",
-    price: null,
   });
   const [url, setUrl] = useState(null);
   const [currentAddress, setCurrentAddress] = useState("");
+  const [imgSrc, setImageSrc] = useState();
+
   const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
   const providerOptions = {
@@ -46,29 +48,41 @@ const NftForm = () => {
   };
   const handleSubmit = async () => {
     console.log(file, data);
-
+    const web3modal = new Web3Modal({
+      providerOptions,
+    });
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
     try {
-      const web3modal = new Web3Modal({
-        providerOptions,
-      });
-      const connection = await web3modal.connect();
-      const provider = new ethers.providers.Web3Provider(connection);
-      const signer = provider.getSigner();
-
-      console.log("Signer:", signer);
-      const nft = new ThirdwebSDK(signer).getNFTModule(NFT_MODULE_ADDRESS);
-      const address = await signer.getAddress();
-
-      setCurrentAddress(await signer.getAddress());
-      nft
-        .mintTo(address, {
+      console.log("name:", data.name);
+      console.log("Image:", await url);
+      await fetch("/api/mint", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          account: address.toString(),
           name: data.name,
           description: data.description,
-          image: url,
+          image: await url,
+        }),
+      })
+        .then((result) => {
+          return result.json();
         })
-        .then(async (metadata) => {
-          console.log("Nft Metadat:", metadata);
-        });
+        .then((data) => {
+          console.log(data);
+          setAsset({
+            ...asset,
+            name: data.name,
+            image: data.image,
+            tokenId: data.id,
+          });
+        })
+        .catch((e) => console.log(e));
     } catch (e) {
       console.log("error while minting nft:", e);
     }
@@ -77,6 +91,13 @@ const NftForm = () => {
   const handlefileupload = async (e) => {
     setFile(e.target.files[0]);
     // console.log(e.target.files[0]);
+
+    try {
+      var url = URL.createObjectURL(e.target.files[0]);
+      setImageSrc(url);
+    } catch (err) {
+      alert(err);
+    }
 
     try {
       const file = e.target.files[0];
@@ -92,11 +113,7 @@ const NftForm = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Paper
-        sx={{
-          padding: { xs: "2rem", md: "4rem" },
-        }}
-      >
+      <Box>
         <FormControl fullWidth>
           <Box sx={{ display: "flex" }}>
             <Box>
@@ -123,7 +140,11 @@ const NftForm = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography>Your Media Here</Typography>
+                {file ? (
+                  <img src={imgSrc} alt='img' width='100%' height='100%' />
+                ) : (
+                  <Typography>Your Media Here</Typography>
+                )}
               </Box>
 
               <input
@@ -197,7 +218,7 @@ const NftForm = () => {
             Mint
           </Button>
         </FormControl>
-      </Paper>
+      </Box>
     </Box>
   );
 };

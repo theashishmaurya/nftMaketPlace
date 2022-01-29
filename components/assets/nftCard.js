@@ -6,23 +6,42 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function NftCard() {
+import { useState, useEffect, useContext } from "react";
+
+export default function NftCard({ nft }) {
+  const { buyoutCurrencyValuePerToken, asset, id } = nft;
+  const handleBuy = async () => {
+    console.log("here!!");
+    await fetch("/api/buyOut", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        listId: id,
+      }),
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log("error:", er);
+      });
+  };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
-        component='img'
-        alt='green iguana'
-        height='140'
-        image='/static/images/cards/contemplative-reptile.jpg'
+        component="img"
+        alt="green iguana"
+        height="140"
+        image={asset.image}
       />
       <CardContent>
-        <Typography gutterBottom variant='h5' component='div'>
-          Lizard
+        <Typography gutterBottom variant="h5" component="div">
+          {asset.name}
         </Typography>
-        <Typography variant='body2' color='text.secondary'>
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
+        {/* Description */}
       </CardContent>
       <CardActions
         sx={{
@@ -31,9 +50,12 @@ export default function NftCard() {
           alignItems: "center",
         }}
       >
-        <Button size='small'>Buy</Button>
-        <Typography fontSize='small' color='primary' variant='button'>
-          Price : {12} eth{" "}
+        <Button size="small" onClick={handleBuy}>
+          Buy
+        </Button>
+        <Typography fontSize="small" color="primary" variant="button">
+          Token Price : {buyoutCurrencyValuePerToken.displayValue}{" "}
+          {buyoutCurrencyValuePerToken.symbol}{" "}
         </Typography>
       </CardActions>
     </Card>

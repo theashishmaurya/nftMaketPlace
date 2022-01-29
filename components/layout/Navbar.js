@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,26 +17,18 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import ConnectWallet from "../utils/ConnectWallet";
+import { UserAddressContext } from "../context/userContext";
 
 const Navbar = () => {
-  const [currentUser, setCurrentUser] = useState("");
-  const providerOptions = {
-    walletconnect: {
-      package: WalletConnectProvider, // required
-      options: {
-        infuraId: "27e484dcd9e3efcfd25a83a78777cdf1", // required
-      },
-    },
-  };
-  const ConnectWallet = async () => {
-    const web3modal = new Web3Modal({
-      providerOptions,
-    });
-    const connection = await web3modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    setCurrentUser(await signer.getAddress());
-    console.log(signer);
+  const [currentUser, setCurrentUser] = useContext(UserAddressContext);
+  const connectWallet = () => {
+    ConnectWallet()
+      .then((data) => {
+        console.log(data);
+        setCurrentUser(data);
+      })
+      .catch((err) => console.log(err));
   };
   useEffect(() => {
     // ConnectWallet();
@@ -79,7 +71,7 @@ const Navbar = () => {
             </Stack>
             <Box>
               <AccountBalanceWalletIcon
-                onClick={ConnectWallet}
+                onClick={connectWallet}
                 sx={{ cursor: "pointer" }}
               />
             </Box>

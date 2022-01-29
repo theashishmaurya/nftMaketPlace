@@ -2,13 +2,37 @@ import Image from "next/image";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserAddressContext } from "../components/context/userContext";
 const Profile = () => {
   const [value, setValue] = useState(0);
-
+  const [NFTdata, setNFTData] = useState([]);
+  const [currentUser, setCurrentUser] = useContext(UserAddressContext);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  useEffect(async () => {
+    console.log(currentUser);
+    await fetch("/api/fetchNFTOwnedBy", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        address: currentUser,
+      }),
+    })
+      .then((result) => {
+        return result.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setNFTData(data);
+      })
+      .catch((err) => {
+        console.log("error:", err);
+      });
+  }, [setCurrentUser]);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Box
@@ -19,9 +43,9 @@ const Profile = () => {
         }}
       >
         <Image
-          className='image-circle'
-          src='/polygon.png'
-          objectFit='cover'
+          className="image-circle"
+          src="/polygon.png"
+          objectFit="cover"
           height={150}
           width={150}
         />
@@ -36,9 +60,9 @@ const Profile = () => {
         }}
       >
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label='Minted Item' sx={{ margin: { md: "0 10rem" } }} />
-          <Tab label='Listed Item' sx={{ margin: { md: "0 10rem" } }} />
-          <Tab label='Your Collection' sx={{ margin: { md: "0 10rem" } }} />
+          <Tab label="Minted Item" sx={{ margin: { md: "0 10rem" } }} />
+          <Tab label="Listed Item" sx={{ margin: { md: "0 10rem" } }} />
+          <Tab label="Your Collection" sx={{ margin: { md: "0 10rem" } }} />
         </Tabs>
       </Box>
     </Box>

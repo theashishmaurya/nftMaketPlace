@@ -12,7 +12,7 @@ import {
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
 import { useCallback, useContext, useEffect, useState } from "react";
-
+import Image from "next/image";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -29,6 +29,8 @@ const NftForm = () => {
   });
   const [url, setUrl] = useState(null);
   const [currentAddress, setCurrentAddress] = useState("");
+  const [imgSrc, setImageSrc] = useState();
+
   const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
   const providerOptions = {
@@ -91,6 +93,13 @@ const NftForm = () => {
     // console.log(e.target.files[0]);
 
     try {
+      var url = URL.createObjectURL(e.target.files[0]);
+      setImageSrc(url);
+    } catch (err) {
+      alert(err);
+    }
+
+    try {
       const file = e.target.files[0];
       const added = await client.add(file);
       console.log("ipfs added item: ", added);
@@ -104,23 +113,19 @@ const NftForm = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Paper
-        sx={{
-          padding: { xs: "2rem", md: "4rem" },
-        }}
-      >
+      <Box>
         <FormControl fullWidth>
           <Box sx={{ display: "flex" }}>
             <Box>
               <Typography
-                variant="h4"
-                fontWeight="bold"
+                variant='h4'
+                fontWeight='bold'
                 sx={{ margin: "1rem 0rem" }}
               >
                 Create New Item
               </Typography>
 
-              <Typography fontWeight="500" sx={{ margin: "1rem 0rem" }}>
+              <Typography fontWeight='500' sx={{ margin: "1rem 0rem" }}>
                 Image, Video, Audio, or 3D Model
               </Typography>
               <Box
@@ -135,21 +140,25 @@ const NftForm = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography>Your Media Here</Typography>
+                {file ? (
+                  <img src={imgSrc} alt='img' width='100%' height='100%' />
+                ) : (
+                  <Typography>Your Media Here</Typography>
+                )}
               </Box>
 
               <input
                 style={{ display: "none" }}
-                accept="image/*"
-                id="contained-button-file"
-                type="file"
+                accept='image/*'
+                id='contained-button-file'
+                type='file'
                 multiple
                 onChange={handlefileupload}
               />
-              <label htmlFor="contained-button-file">
+              <label htmlFor='contained-button-file'>
                 <Button
-                  variant="contained"
-                  component="span"
+                  variant='contained'
+                  component='span'
                   sx={{ margin: "1rem 0" }}
                 >
                   Upload
@@ -157,16 +166,16 @@ const NftForm = () => {
               </label>
             </Box>
             <Box sx={{ margin: "0 2rem" }}>
-              <Divider orientation="vertical" />
+              <Divider orientation='vertical' />
             </Box>
             <Box sx={{ margin: "4rem 0rem", width: "30rem" }}>
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">Name</Typography>
+                <Typography fontWeight='bold'>Name</Typography>
                 <TextField
-                  variant="outlined"
-                  size="small"
+                  variant='outlined'
+                  size='small'
                   fullWidth
-                  placeholder="name"
+                  placeholder='name'
                   required
                   onChange={(e) => {
                     handleChange(e, "name");
@@ -174,29 +183,42 @@ const NftForm = () => {
                 />
               </Stack>
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">Description</Typography>
+                <Typography fontWeight='bold'>Description</Typography>
 
                 <TextareaAutosize
                   minRows={5}
                   fullWidth
-                  placeholder="Description"
+                  placeholder='Description'
                   onChange={(e) => {
                     handleChange(e, "description");
                   }}
                 />
               </Stack>
+              {/* <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
+                <Typography fontWeight='bold'>Listing Price</Typography>
+                <TextField
+                  variant='outlined'
+                  size='small'
+                  fullWidth
+                  placeholder='price'
+                  required
+                  onChange={(e) => {
+                    handleChange(e, "price");
+                  }}
+                />
+              </Stack> */}
             </Box>
           </Box>
           <Divider sx={{ margin: "1rem 0" }} />
           <Button
             onClick={handleSubmit}
-            variant="contained"
+            variant='contained'
             sx={{ margin: "1rem 0rem" }}
           >
             Mint
           </Button>
         </FormControl>
-      </Paper>
+      </Box>
     </Box>
   );
 };

@@ -2,13 +2,22 @@ import Image from "next/image";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const Profile = () => {
   const [value, setValue] = useState(0);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/fetchNTFOwnedBy", { method: "POST" })
+      .then((data) => data.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Box
@@ -36,8 +45,8 @@ const Profile = () => {
         }}
       >
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label='Minted Item' sx={{ margin: { md: "0 10rem" } }} />
-          <Tab label='Listed Item' sx={{ margin: { md: "0 10rem" } }} />
+          {/* <Tab label='Minted Item' sx={{ margin: { md: "0 10rem" } }} />
+          <Tab label='Listed Item' sx={{ margin: { md: "0 10rem" } }} /> */}
           <Tab label='Your Collection' sx={{ margin: { md: "0 10rem" } }} />
         </Tabs>
       </Box>

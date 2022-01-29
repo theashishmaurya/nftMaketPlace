@@ -5,10 +5,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { GlassContainer } from "../layout/container";
 
 export default function NftCard() {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <GlassContainer sx={{ maxWidth: 345 }}>
       <CardMedia
         component='img'
         alt='green iguana'
@@ -36,6 +37,6 @@ export default function NftCard() {
           Price : {12} eth{" "}
         </Typography>
       </CardActions>
-    </Card>
+    </GlassContainer>
   );
 }

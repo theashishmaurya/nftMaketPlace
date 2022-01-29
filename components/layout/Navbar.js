@@ -17,6 +17,8 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import PersonIcon from "@mui/icons-material/Person";
+import Link from "next/link";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useState("");
@@ -42,8 +44,8 @@ const Navbar = () => {
     // ConnectWallet();
   }, []);
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar position='static' color='transparent'>
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Box
             sx={{
@@ -53,36 +55,39 @@ const Navbar = () => {
               alignItems: "center",
             }}
           >
-            <Stack direction="row" alignItems={"center"}>
+            <Stack direction='row' alignItems={"center"}>
               <Typography
-                variant="h6"
+                variant='h6'
                 noWrap
-                component="div"
+                component='div'
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
                 LOGO
               </Typography>
 
-              <Stack direction="row" gap={2}>
-                <a href="assets">
+              <Stack direction='row' gap={2}>
+                <a href='assets'>
                   <Typography>Assests</Typography>
                 </a>
-                <a href="create">
+                <a href='create'>
                   <Typography>Create</Typography>
                 </a>
                 {currentUser && (
-                  <a href="myCollection">
+                  <a href='myCollection'>
                     <Typography>My Collection</Typography>
                   </a>
                 )}
               </Stack>
             </Stack>
-            <Box>
+            <Stack direction='row' gap={2}>
+              <Link href='/profile'>
+                <PersonIcon />
+              </Link>
               <AccountBalanceWalletIcon
                 onClick={ConnectWallet}
                 sx={{ cursor: "pointer" }}
               />
-            </Box>
+            </Stack>
           </Box>
         </Toolbar>
       </Container>

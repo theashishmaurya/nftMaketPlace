@@ -4,6 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { useState, useEffect, useContext } from "react";
 import { UserAddressContext } from "../components/context/userContext";
+import { GlassContainer } from "../components/layout/container";
 const Profile = () => {
   const [value, setValue] = useState(0);
   const [NFTdata, setNFTData] = useState([]);
@@ -34,7 +35,9 @@ const Profile = () => {
       });
   }, [setCurrentUser]);
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <GlassContainer
+      sx={{ flexGrow: 1, margin: "4rem 0rem", padding: "2rem 0rem" }}
+    >
       <Box
         sx={{
           flexGrow: 1,
@@ -54,18 +57,17 @@ const Profile = () => {
       <Box
         sx={{
           width: "100%",
-          bgcolor: "background.paper",
           flexGrow: 1,
           margin: "4rem 0rem",
         }}
       >
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="Minted Item" sx={{ margin: { md: "0 10rem" } }} />
-          <Tab label="Listed Item" sx={{ margin: { md: "0 10rem" } }} />
+          {/* <Tab label='Minted Item' sx={{ margin: { md: "0 10rem" } }} />
+          <Tab label='Listed Item' sx={{ margin: { md: "0 10rem" } }} /> */}
           <Tab label="Your Collection" sx={{ margin: { md: "0 10rem" } }} />
         </Tabs>
       </Box>
-    </Box>
+    </GlassContainer>
   );
 };
 

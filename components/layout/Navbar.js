@@ -19,6 +19,8 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import ConnectWallet from "../utils/ConnectWallet";
 import { UserAddressContext } from "../context/userContext";
+import PersonIcon from "@mui/icons-material/Person";
+import Link from "next/link";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = useContext(UserAddressContext);
@@ -34,8 +36,8 @@ const Navbar = () => {
     // ConnectWallet();
   }, []);
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar position='static' color='transparent'>
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Box
             sx={{
@@ -45,36 +47,43 @@ const Navbar = () => {
               alignItems: "center",
             }}
           >
-            <Stack direction="row" alignItems={"center"}>
+            <Stack direction='row' alignItems={"center"}>
               <Typography
-                variant="h6"
+                variant='h6'
                 noWrap
-                component="div"
+                component='div'
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
                 LOGO
               </Typography>
 
-              <Stack direction="row" gap={2}>
-                <a href="assets">
-                  <Typography>Assests</Typography>
-                </a>
-                <a href="create">
-                  <Typography>Create</Typography>
-                </a>
+              <Stack direction='row' gap={2}>
+                <Link href='/assets'>
+                  <Typography sx={{ cursor: "pointer" }} fontWeight={"bold"}>
+                    Assests
+                  </Typography>
+                </Link>
+                <Link href='/create'>
+                  <Typography sx={{ cursor: "pointer" }} fontWeight={"bold"}>
+                    Create
+                  </Typography>
+                </Link>
                 {currentUser && (
-                  <a href="myCollection">
+                  <a href='myCollection'>
                     <Typography>My Collection</Typography>
                   </a>
                 )}
               </Stack>
             </Stack>
-            <Box>
+            <Stack direction='row' gap={2}>
+              <Link href='/profile'>
+                <PersonIcon sx={{ cursor: "pointer" }} />
+              </Link>
               <AccountBalanceWalletIcon
                 onClick={connectWallet}
                 sx={{ cursor: "pointer" }}
               />
-            </Box>
+            </Stack>
           </Box>
         </Toolbar>
       </Container>

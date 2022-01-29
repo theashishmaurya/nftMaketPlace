@@ -10,6 +10,7 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import ListingForm from "../components/create/listForm";
 import NftForm from "../components/create/nftForm";
+import { GlassContainer } from "../components/layout/container";
 
 const steps = ["Mint a NFT", "List your NFT"];
 
@@ -59,7 +60,7 @@ const Create = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Paper sx={{ width: "80%", padding: "2rem", margin: "4rem" }}>
+      <GlassContainer sx={{ width: "80%", padding: "2rem", margin: "4rem" }}>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps = {};
@@ -127,7 +128,7 @@ const Create = () => {
             </Box>
           </>
         )}
-      </Paper>
+      </GlassContainer>
     </Box>
   );
 };

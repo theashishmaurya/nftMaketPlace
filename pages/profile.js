@@ -21,7 +21,12 @@ const Profile = () => {
 
   return (
     <GlassContainer
-      sx={{ flexGrow: 1, margin: "4rem 0rem", padding: "2rem 0rem" }}
+      sx={{
+        flexGrow: 1,
+        margin: "4rem 0rem",
+        padding: "2rem 0rem",
+        minHeight: "100vh",
+      }}
     >
       <Box
         sx={{

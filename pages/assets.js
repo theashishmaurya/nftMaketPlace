@@ -2,6 +2,7 @@ import { Container, Grid } from "@mui/material";
 import Navbar from "../components/layout/Navbar";
 import NftCard from "../components/assets/nftCard";
 import { useState, useEffect, useContext } from "react";
+import Link from "next/link";
 const { Box } = require("@mui/system");
 
 const Assets = () => {
@@ -25,10 +26,11 @@ const Assets = () => {
       <Box sx={{ margin: "4rem 0" }}>
         <Grid container spacing={10}>
           {marketData.map((data) => {
-            console.log(data);
             return (
               <Grid item xs={12} md={4} key={data.id}>
-                <NftCard key={data.id} nft={data} />
+                <Link href={`/nft/${data.id}`}>
+                  <NftCard key={data.id} nft={data} />
+                </Link>
               </Grid>
             );
           })}

@@ -8,9 +8,11 @@ import Typography from "@mui/material/Typography";
 import { GlassContainer } from "../layout/container";
 
 import { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 
 export default function NftCard({ nft }) {
   const { buyoutCurrencyValuePerToken, asset, id } = nft;
+  const router = useRouter();
   const handleBuy = async () => {
     console.log("here!!");
     await fetch("/api/buyOut", {
@@ -31,7 +33,12 @@ export default function NftCard({ nft }) {
   };
 
   return (
-    <GlassContainer sx={{ maxWidth: 345, cursor: "pointer" }}>
+    <GlassContainer
+      sx={{ maxWidth: 345, cursor: "pointer" }}
+      onClick={() => {
+        router.replace(`/nft/${id}`);
+      }}
+    >
       <CardMedia
         component='img'
         alt='green iguana'

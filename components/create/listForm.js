@@ -21,14 +21,16 @@ import { CopyAll } from "@mui/icons-material";
 const ListingForm = () => {
   const { asset, setAsset } = useContext(AssetContext);
   const [tokenOffer, setTokenOffer] = useState("");
-
+  const { ethereum } = window;
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
   const handleChange = (e) => {
     setTokenOffer(e.target.value);
   };
 
   const handleListing = async () => {
     // call listing api
-    console.log(tokenOffer, asset.tokenId);
+    console.log(tokenOffer, asset.tokenId, signer.getAddress());
     try {
       await fetch("/api/list", {
         method: "POST",
@@ -38,6 +40,7 @@ const ListingForm = () => {
         body: JSON.stringify({
           tokenOffer: tokenOffer,
           tokenId: asset.tokenId,
+          // signer: signer,
         }),
       })
         .then((result) => {

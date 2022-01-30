@@ -6,11 +6,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { GlassContainer } from "../layout/container";
-
+import { UserAddressContext } from "../context/userContext";
 import { useState, useEffect, useContext } from "react";
 
 export default function NftCard({ nft }) {
   const { buyoutCurrencyValuePerToken, asset, id } = nft;
+  const [currentAddress, setCurrentAddress] = useContext(UserAddressContext);
   const handleBuy = async () => {
     console.log("here!!");
     await fetch("/api/buyOut", {
@@ -20,13 +21,14 @@ export default function NftCard({ nft }) {
       },
       body: JSON.stringify({
         listId: id,
+        buyerAddress: currentAddress,
       }),
     })
       .then((data) => {
         console.log(data);
       })
       .catch((err) => {
-        console.log("error:", er);
+        console.log("error:", err);
       });
   };
 

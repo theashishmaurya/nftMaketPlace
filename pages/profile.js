@@ -5,6 +5,7 @@ import Tab from "@mui/material/Tab";
 import { useState, useEffect, useContext } from "react";
 import { UserAddressContext } from "../components/context/userContext";
 import { GlassContainer } from "../components/layout/container";
+import collectionCard from "../components/assets/collectionCard";
 const Profile = () => {
   const [value, setValue] = useState(0);
   const [NFTdata, setNFTData] = useState([]);
@@ -51,9 +52,9 @@ const Profile = () => {
         }}
       >
         <Image
-          className="image-circle"
-          src="/polygon.png"
-          objectFit="cover"
+          className='image-circle'
+          src='/polygon.png'
+          objectFit='cover'
           height={150}
           width={150}
         />
@@ -69,8 +70,13 @@ const Profile = () => {
         <Tabs value={value} onChange={handleChange} centered>
           {/* <Tab label='Minted Item' sx={{ margin: { md: "0 10rem" } }} />
           <Tab label='Listed Item' sx={{ margin: { md: "0 10rem" } }} /> */}
-          <Tab label="Your Collection" sx={{ margin: { md: "0 10rem" } }} />
+          <Tab label='Your Collection' sx={{ margin: { md: "0 10rem" } }} />
         </Tabs>
+      </Box>
+      <Box>
+        {NFTdata.map((data, index) => {
+          <collectionCard {...data} key={index} />;
+        })}
       </Box>
     </GlassContainer>
   );

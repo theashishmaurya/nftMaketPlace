@@ -20,6 +20,7 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { AssetContext } from "../context/assetContext";
 import { UserAddressContext } from "../context/userContext";
 import ConnectWallet from "../utils/ConnectWallet";
+import { GlassButton } from "../landingPage/heroArea";
 const NftForm = () => {
   const [file, setFile] = useState();
   const { asset, setAsset } = useContext(AssetContext);
@@ -122,22 +123,25 @@ const NftForm = () => {
           <Box sx={{ display: "flex" }}>
             <Box>
               <Typography
-                variant="h4"
-                fontWeight="bold"
+                variant='h4'
+                fontWeight='bold'
                 sx={{ margin: "1rem 0rem" }}
               >
                 Create New Item
               </Typography>
 
-              <Typography fontWeight="500" sx={{ margin: "1rem 0rem" }}>
+              <Typography fontWeight='500' sx={{ margin: "1rem 0rem" }}>
                 Image, Video, Audio, or 3D Model
               </Typography>
               <Box
                 sx={{
                   width: "100%",
                   height: "30vh",
-                  backgroundColor: "#CADDE1",
-                  borderStyle: "dashed",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  borderRadius: "4px",
+                  boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                  backdropFilter: "blur(5px)",
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
                   margin: "1rem 0rem",
                   display: "flex",
                   justifyContent: "center",
@@ -145,7 +149,7 @@ const NftForm = () => {
                 }}
               >
                 {file ? (
-                  <img src={imgSrc} alt="img" width="100%" height="100%" />
+                  <img src={imgSrc} alt='img' width='100%' height='100%' />
                 ) : (
                   <Typography>Your Media Here</Typography>
                 )}
@@ -153,46 +157,68 @@ const NftForm = () => {
 
               <input
                 style={{ display: "none" }}
-                accept="image/*"
-                id="contained-button-file"
-                type="file"
+                accept='image/*'
+                id='contained-button-file'
+                type='file'
                 multiple
                 onChange={handlefileupload}
               />
-              <label htmlFor="contained-button-file">
-                <Button
-                  variant="contained"
-                  component="span"
-                  sx={{ margin: "1rem 0" }}
+              <label htmlFor='contained-button-file'>
+                <GlassButton
+                  variant='contained'
+                  component='span'
+                  sx={{ margin: "1rem 0", borderRadius: "4px" }}
                 >
                   Upload
-                </Button>
+                </GlassButton>
               </label>
             </Box>
             <Box sx={{ margin: "0 2rem" }}>
-              <Divider orientation="vertical" />
+              <Divider orientation='vertical' />
             </Box>
-            <Box sx={{ margin: "4rem 0rem", width: "30rem" }}>
+            <Box
+              sx={{
+                margin: "4rem 0rem",
+                width: "20rem",
+                display: "flex",
+                alingItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">Name</Typography>
+                <Typography fontWeight='bold'>Name</Typography>
                 <TextField
-                  variant="outlined"
-                  size="small"
+                  variant='outlined'
+                  size='small'
                   fullWidth
-                  placeholder="name"
+                  placeholder='name'
                   required
+                  sx={{
+                    background: "rgba(255, 255, 255, 0.2)",
+                    borderRadius: "4px",
+                    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                    backdropFilter: "blur(5px)",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                  }}
                   onChange={(e) => {
                     handleChange(e, "name");
                   }}
                 />
               </Stack>
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">Description</Typography>
+                <Typography fontWeight='bold'>Description</Typography>
 
-                <TextareaAutosize
-                  minRows={5}
+                <TextField
+                  sx={{
+                    background: "rgba(255, 255, 255, 0.2)",
+                    borderRadius: "4px",
+                    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                    backdropFilter: "blur(5px)",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                  }}
                   fullWidth
-                  placeholder="Description"
+                  placeholder='Description'
                   onChange={(e) => {
                     handleChange(e, "description");
                   }}
@@ -214,13 +240,13 @@ const NftForm = () => {
             </Box>
           </Box>
           <Divider sx={{ margin: "1rem 0" }} />
-          <Button
+          <GlassButton
             onClick={handleSubmit}
-            variant="contained"
-            sx={{ margin: "1rem 0rem" }}
+            variant='contained'
+            sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
           >
             Mint
-          </Button>
+          </GlassButton>
         </FormControl>
       </Box>
     </Box>

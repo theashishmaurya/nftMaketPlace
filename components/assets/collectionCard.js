@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { GlassContainer } from "../layout/container";
 
-export default function NftCard() {
+export default function collectionCard(props) {
   return (
     <GlassContainer sx={{ maxWidth: 345 }}>
       <CardMedia

@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { GlassContainer } from "../layout/container";
-
+import { UserAddressContext } from "../context/userContext";
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 
@@ -28,7 +28,7 @@ export default function NftCard({ nft }) {
         console.log(data);
       })
       .catch((err) => {
-        console.log("error:", er);
+        console.log("error:", err);
       });
   };
 

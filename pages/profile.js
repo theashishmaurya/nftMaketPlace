@@ -10,7 +10,7 @@ import { LineAxisOutlined } from "@mui/icons-material";
 const Profile = () => {
   const [value, setValue] = useState(0);
   const [NFTdata, setNFTData] = useState([]);
-  const [currentUser, setCurrentUser] = useContext(UserAddressContext);
+  const currentUser = sessionStorage.getItem("address");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

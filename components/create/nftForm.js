@@ -50,15 +50,9 @@ const NftForm = () => {
   };
   const handleSubmit = async () => {
     console.log(file, data);
-    // const web3modal = new Web3Modal({
-    //   providerOptions,
-    // });
-    // const connection = await web3modal.connect();
-    // const provider = new ethers.providers.Web3Provider(connection);
-    // const signer = provider.getSigner();
-    // const address = await signer.getAddress();
-    // ConnectWallet();
-    console.log(currentUser);
+    console.log(sessionStorage.getItem("address"));
+    const address = sessionStorage.getItem("address");
+
     try {
       console.log("name:", data.name);
       console.log("Image:", await url);
@@ -68,7 +62,7 @@ const NftForm = () => {
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          account: currentUser,
+          account: address,
           name: data.name,
           description: data.description,
           image: await url,

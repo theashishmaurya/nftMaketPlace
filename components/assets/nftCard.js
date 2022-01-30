@@ -11,7 +11,8 @@ import { useState, useEffect, useContext } from "react";
 
 export default function NftCard({ nft }) {
   const { buyoutCurrencyValuePerToken, asset, id } = nft;
-  const [currentAddress, setCurrentAddress] = useContext(UserAddressContext);
+  const currentAddress = sessionStorage.getItem("address");
+  console.log(currentAddress);
   const handleBuy = async () => {
     console.log("here!!");
     await fetch("/api/buyOut", {

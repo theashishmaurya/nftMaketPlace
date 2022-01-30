@@ -6,11 +6,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { GlassContainer } from "../layout/container";
-
+import { UserAddressContext } from "../context/userContext";
 import { useState, useEffect, useContext } from "react";
 
 export default function NftCard({ nft }) {
   const { buyoutCurrencyValuePerToken, asset, id } = nft;
+
   const handleBuy = async () => {
     console.log("here!!");
     await fetch("/api/buyOut", {
@@ -26,21 +27,21 @@ export default function NftCard({ nft }) {
         console.log(data);
       })
       .catch((err) => {
-        console.log("error:", er);
+        console.log("error:", err);
       });
   };
 
   return (
     <GlassContainer sx={{ maxWidth: 345, cursor: "pointer" }}>
       <CardMedia
-        component='img'
-        alt='green iguana'
-        height='140'
+        component="img"
+        alt="green iguana"
+        height="140"
         sx={{ borderRadius: "16px 16px 0 0" }}
         image={asset.image}
       />
       <CardContent>
-        <Typography gutterBottom variant='h5' component='div'>
+        <Typography gutterBottom variant="h5" component="div">
           {asset.name}
         </Typography>
         {/* Description */}
@@ -52,10 +53,10 @@ export default function NftCard({ nft }) {
           alignItems: "center",
         }}
       >
-        <Button size='small' onClick={handleBuy}>
+        <Button size="small" onClick={handleBuy}>
           Buy
         </Button>
-        <Typography fontSize='small' color='primary' variant='button'>
+        <Typography fontSize="small" color="primary" variant="button">
           Token Price : {buyoutCurrencyValuePerToken.displayValue}{" "}
           {buyoutCurrencyValuePerToken.symbol}{" "}
         </Typography>

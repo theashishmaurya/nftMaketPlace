@@ -5,10 +5,11 @@ export default async function list(req, res) {
   const rpcUrl = "https://rpc-mumbai.maticvigil.com";
   const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
   const NFT_MODULE_ADDRESS = "0x0C8fe5019D3B3BaC3B9e0878080C898518E02060";
-  const MARKETPLACE_ADDRESS = "0x3Edd5980ab00A580171AcbB05696A4Eb988ba6E7";
+  //   const MARKETPLACE_ADDRESS = "0x3Edd5980ab00A580171AcbB05696A4Eb988ba6E7";
+  const MARKETPLACE_ADDRESS = "0x229b1f789506dbea2052f8423a780b1be1c16f21";
   //polygon mumbai test net
-  //   const TOKEN_ADDRESS = "0x800d5c2BD0aB447ceC839Dc22A14ddA6751b8879";
-  const TOKEN_ADDRESS = "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0";
+  const TOKEN_ADDRESS = "0x800d5c2BD0aB447ceC839Dc22A14ddA6751b8879";  //custom
+  //   const TOKEN_ADDRESS = "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0";  //MATIC
 
   console.log(privateKey);
   const { tokenOffer, tokenId } = await req.body;

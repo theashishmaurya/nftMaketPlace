@@ -11,8 +11,7 @@ import { useState, useEffect, useContext } from "react";
 
 export default function NftCard({ nft }) {
   const { buyoutCurrencyValuePerToken, asset, id } = nft;
-  const currentAddress = sessionStorage.getItem("address");
-  console.log(currentAddress);
+
   const handleBuy = async () => {
     console.log("here!!");
     await fetch("/api/buyOut", {
@@ -22,7 +21,6 @@ export default function NftCard({ nft }) {
       },
       body: JSON.stringify({
         listId: id,
-        buyerAddress: currentAddress,
       }),
     })
       .then((data) => {
@@ -34,11 +32,12 @@ export default function NftCard({ nft }) {
   };
 
   return (
-    <GlassContainer sx={{ maxWidth: 345 }}>
+    <GlassContainer sx={{ maxWidth: 345, cursor: "pointer" }}>
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
+        sx={{ borderRadius: "16px 16px 0 0" }}
         image={asset.image}
       />
       <CardContent>

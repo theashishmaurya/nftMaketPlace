@@ -7,14 +7,21 @@ import { useState, useEffect, useContext } from "react";
 import { UserAddressContext } from "../components/context/userContext";
 import { GlassContainer } from "../components/layout/container";
 import { LineAxisOutlined } from "@mui/icons-material";
+import collectionCard from "../components/assets/collectionCard";
 const Profile = () => {
   const [value, setValue] = useState(0);
   const [NFTdata, setNFTData] = useState([]);
-  const currentUser = sessionStorage.getItem("address");
+  const [address, setAddress] = useState("");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   useEffect(async () => {
+    const currentUser = "";
+    if (typeof window !== "undefined") {
+      // do your stuff with sessionStorage
+      currentUser = sessionStorage.getItem("address");
+      setAddress(sessionStorage.getItem("address"));
+    }
     console.log(currentUser);
     axios
       .post("/api/fetchNFTOwnedBy", {
@@ -34,10 +41,15 @@ const Profile = () => {
       .catch((err) => {
         console.log("error:", err);
       });
-  }, [currentUser]);
+  }, [address]);
   return (
     <GlassContainer
-      sx={{ flexGrow: 1, margin: "4rem 0rem", padding: "2rem 0rem" }}
+      sx={{
+        flexGrow: 1,
+        margin: "4rem 0rem",
+        padding: "2rem 0rem",
+        minHeight: "100vh",
+      }}
     >
       <Box
         sx={{
@@ -67,6 +79,11 @@ const Profile = () => {
           <Tab label='Listed Item' sx={{ margin: { md: "0 10rem" } }} /> */}
           <Tab label="Your Collection" sx={{ margin: { md: "0 10rem" } }} />
         </Tabs>
+      </Box>
+      <Box>
+        {NFTdata.map((data, index) => {
+          <collectionCard {...data} key={index} />;
+        })}
       </Box>
     </GlassContainer>
   );

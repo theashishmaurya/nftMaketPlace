@@ -20,10 +20,10 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { AssetContext } from "../context/assetContext";
 import { UserAddressContext } from "../context/userContext";
 import ConnectWallet from "../utils/ConnectWallet";
+import { GlassButton } from "../landingPage/heroArea";
 const NftForm = () => {
   const [file, setFile] = useState();
   const { asset, setAsset } = useContext(AssetContext);
-  const [currentUser, setCurrentUser] = useContext(UserAddressContext);
   // console.log(asset);
   const [data, setData] = useState({
     name: "",
@@ -35,24 +35,16 @@ const NftForm = () => {
 
   const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
-  // const providerOptions = {
-  //   /* See Provider Options Section */
-  //   walletconnect: {
-  //     package: WalletConnectProvider, // required
-  //     options: {
-  //       infuraId: "27e484dcd9e3efcfd25a83a78777cdf1", // required
-  //     },
-  //   },
-  // };
-
   const handleChange = (e, name) => {
     setData({ ...data, [name]: e.target.value });
   };
   const handleSubmit = async () => {
     console.log(file, data);
-    console.log(sessionStorage.getItem("address"));
-    const address = sessionStorage.getItem("address");
 
+    if (typeof window !== "undefined") {
+      console.log(sessionStorage.getItem("address"));
+      setCurrentAddress(sessionStorage.getItem("address"));
+    }
     try {
       console.log("name:", data.name);
       console.log("Image:", await url);
@@ -62,7 +54,7 @@ const NftForm = () => {
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          account: address,
+          account: currentAddress,
           name: data.name,
           description: data.description,
           image: await url,
@@ -109,6 +101,11 @@ const NftForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentAddress(sessionStorage.getItem("address"));
+    }
+  }, [currentAddress]);
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Box>
@@ -130,8 +127,11 @@ const NftForm = () => {
                 sx={{
                   width: "100%",
                   height: "30vh",
-                  backgroundColor: "#CADDE1",
-                  borderStyle: "dashed",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  borderRadius: "4px",
+                  boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                  backdropFilter: "blur(5px)",
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
                   margin: "1rem 0rem",
                   display: "flex",
                   justifyContent: "center",
@@ -154,19 +154,28 @@ const NftForm = () => {
                 onChange={handlefileupload}
               />
               <label htmlFor="contained-button-file">
-                <Button
+                <GlassButton
                   variant="contained"
                   component="span"
-                  sx={{ margin: "1rem 0" }}
+                  sx={{ margin: "1rem 0", borderRadius: "4px" }}
                 >
                   Upload
-                </Button>
+                </GlassButton>
               </label>
             </Box>
             <Box sx={{ margin: "0 2rem" }}>
               <Divider orientation="vertical" />
             </Box>
-            <Box sx={{ margin: "4rem 0rem", width: "30rem" }}>
+            <Box
+              sx={{
+                margin: "4rem 0rem",
+                width: "20rem",
+                display: "flex",
+                alingItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
                 <Typography fontWeight="bold">Name</Typography>
                 <TextField
@@ -175,6 +184,13 @@ const NftForm = () => {
                   fullWidth
                   placeholder="name"
                   required
+                  sx={{
+                    background: "rgba(255, 255, 255, 0.2)",
+                    borderRadius: "4px",
+                    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                    backdropFilter: "blur(5px)",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                  }}
                   onChange={(e) => {
                     handleChange(e, "name");
                   }}
@@ -183,8 +199,14 @@ const NftForm = () => {
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
                 <Typography fontWeight="bold">Description</Typography>
 
-                <TextareaAutosize
-                  minRows={5}
+                <TextField
+                  sx={{
+                    background: "rgba(255, 255, 255, 0.2)",
+                    borderRadius: "4px",
+                    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+                    backdropFilter: "blur(5px)",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                  }}
                   fullWidth
                   placeholder="Description"
                   onChange={(e) => {
@@ -208,13 +230,13 @@ const NftForm = () => {
             </Box>
           </Box>
           <Divider sx={{ margin: "1rem 0" }} />
-          <Button
+          <GlassButton
             onClick={handleSubmit}
             variant="contained"
-            sx={{ margin: "1rem 0rem" }}
+            sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
           >
             Mint
-          </Button>
+          </GlassButton>
         </FormControl>
       </Box>
     </Box>

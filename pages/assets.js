@@ -21,7 +21,7 @@ const Assets = () => {
       });
   }, []);
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>
       <Box sx={{ margin: "4rem 0" }}>
         <Grid container spacing={10}>
           {marketData.map((data) => {

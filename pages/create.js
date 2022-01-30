@@ -60,7 +60,14 @@ const Create = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <GlassContainer sx={{ width: "80%", padding: "2rem", margin: "4rem" }}>
+      <GlassContainer
+        sx={{
+          width: "80%",
+          padding: "2rem",
+          margin: "4rem",
+          minHeight: "90vh",
+        }}
+      >
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps = {};

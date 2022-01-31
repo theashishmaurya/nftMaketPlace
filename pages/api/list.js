@@ -5,10 +5,10 @@ export default async function list(req, res) {
   const rpcUrl = "https://rpc-mumbai.maticvigil.com";
   const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
   const NFT_MODULE_ADDRESS = "0x0C8fe5019D3B3BaC3B9e0878080C898518E02060";
-  //   const MARKETPLACE_ADDRESS = "0x3Edd5980ab00A580171AcbB05696A4Eb988ba6E7";
-  const MARKETPLACE_ADDRESS = "0x229b1f789506dbea2052f8423a780b1be1c16f21";
+  const MARKETPLACE_ADDRESS = "0x40F446B736883195FAb9Cd42B5Bd5bCE0c410138";
+  // const MARKETPLACE_ADDRESS = "0x229b1f789506dbea2052f8423a780b1be1c16f21";
   //polygon mumbai test net
-  const TOKEN_ADDRESS = "0x800d5c2BD0aB447ceC839Dc22A14ddA6751b8879";  //custom
+  const TOKEN_ADDRESS = "0x800d5c2BD0aB447ceC839Dc22A14ddA6751b8879"; //custom
   //   const TOKEN_ADDRESS = "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0";  //MATIC
 
   console.log(privateKey);
@@ -16,7 +16,7 @@ export default async function list(req, res) {
   const { tokenOffer, tokenId } = await req.body;
 
   console.log(req.body);
-  
+
   const wallet = new ethers.Wallet(
     privateKey,
     ethers.getDefaultProvider(rpcUrl)

@@ -18,11 +18,13 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { CopyAll } from "@mui/icons-material";
 import { GlassButton } from "../landingPage/heroArea";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ListingForm = () => {
   const { asset, setAsset } = useContext(AssetContext);
 
   const [tokenOffer, setTokenOffer] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setTokenOffer(e.target.value);
@@ -31,6 +33,7 @@ const ListingForm = () => {
   const handleListing = async () => {
     // call listing api
     console.log(tokenOffer, asset.tokenId);
+    setLoading(true);
     try {
       await fetch("/api/list", {
         method: "POST",
@@ -50,9 +53,11 @@ const ListingForm = () => {
         })
         .catch((err) => {
           console.log("Error:", err);
+          setLoading(false);
         });
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
   return (
@@ -62,14 +67,14 @@ const ListingForm = () => {
           <Box sx={{ display: "flex" }}>
             <Box>
               <Typography
-                variant="h4"
-                fontWeight="bold"
+                variant='h4'
+                fontWeight='bold'
                 sx={{ margin: "1rem 0rem" }}
               >
                 List you NFT
               </Typography>
 
-              <Typography fontWeight="500" sx={{ margin: "1rem 0rem" }}>
+              <Typography fontWeight='500' sx={{ margin: "1rem 0rem" }}>
                 Below Is your Minted NFT
               </Typography>
               <Box
@@ -87,11 +92,11 @@ const ListingForm = () => {
                   alignItems: "center",
                 }}
               >
-                <img src={asset.image} alt="img" width="100%" height="100%" />
+                <img src={asset.image} alt='img' width='100%' height='100%' />
               </Box>
             </Box>
             <Box sx={{ margin: "0 2rem" }}>
-              <Divider orientation="vertical" />
+              <Divider orientation='vertical' />
             </Box>
             <Box sx={{ margin: "4rem 0rem", width: "20rem" }}>
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
@@ -107,16 +112,16 @@ const ListingForm = () => {
               </Stack>
 
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">
+                <Typography fontWeight='bold'>
                   Select your listing Price :
                 </Typography>
                 <TextField
-                  variant="outlined"
-                  size="small"
+                  variant='outlined'
+                  size='small'
                   fullWidth
-                  placeholder="price"
+                  placeholder='price'
                   required
-                  type="number"
+                  type='number'
                   sx={{
                     background: "rgba(255, 255, 255, 0.2)",
                     borderRadius: "4px",
@@ -133,11 +138,11 @@ const ListingForm = () => {
           </Box>
           <Divider sx={{ margin: "1rem 0" }} />
           <GlassButton
-            variant="contained"
+            variant='contained'
             sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
             onClick={handleListing}
           >
-            List
+            {loading ? <CircularProgress /> : <Typography>List</Typography>}
           </GlassButton>
         </FormControl>
       </Box>

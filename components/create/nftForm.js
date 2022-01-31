@@ -21,6 +21,8 @@ import { AssetContext } from "../context/assetContext";
 import { UserAddressContext } from "../context/userContext";
 import ConnectWallet from "../utils/ConnectWallet";
 import { GlassButton } from "../landingPage/heroArea";
+import CircularProgress from "@mui/material/CircularProgress";
+
 const NftForm = ({ handleNftNext }) => {
   const [file, setFile] = useState();
   const { asset, setAsset } = useContext(AssetContext);
@@ -32,6 +34,7 @@ const NftForm = ({ handleNftNext }) => {
   const [url, setUrl] = useState(null);
   const [currentAddress, setCurrentAddress] = useState("");
   const [imgSrc, setImageSrc] = useState();
+  const [loading, setLoading] = useState(false);
 
   const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -39,8 +42,8 @@ const NftForm = ({ handleNftNext }) => {
     setData({ ...data, [name]: e.target.value });
   };
   const handleSubmit = async () => {
-    console.log(file, data);
-
+    // console.log(file, data);
+    setLoading(true);
     if (typeof window !== "undefined") {
       console.log(sessionStorage.getItem("address"));
       setCurrentAddress(sessionStorage.getItem("address"));
@@ -75,6 +78,7 @@ const NftForm = ({ handleNftNext }) => {
         })
         .catch((e) => console.log(e));
     } catch (e) {
+      setLoading(false);
       console.log("error while minting nft:", e);
     }
   };
@@ -232,11 +236,12 @@ const NftForm = ({ handleNftNext }) => {
           </Box>
           <Divider sx={{ margin: "1rem 0" }} />
           <GlassButton
+            // loading
             onClick={handleSubmit}
             variant='contained'
             sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
           >
-            Mint
+            {loading ? <CircularProgress /> : <Typography>Mint</Typography>}
           </GlassButton>
         </FormControl>
       </Box>

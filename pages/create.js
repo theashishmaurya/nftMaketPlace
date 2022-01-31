@@ -19,7 +19,7 @@ const steps = ["Mint a NFT", "List your NFT"];
 const Create = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState("");
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -85,7 +85,7 @@ const Create = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      {currentUser === undefined ? (
+      {currentUser === "" ? (
         <ConnnectWalletUi handleWalletConnection={handleWalletConnection} />
       ) : (
         <GlassContainer
@@ -137,7 +137,7 @@ const Create = () => {
               ) : (
                 <>
                   <Box sx={{ margin: "2rem" }}>
-                    <ListingForm />
+                    <ListingForm handleNftNext={handleNftNext} />
                   </Box>
                 </>
               )}

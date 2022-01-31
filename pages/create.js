@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import FinishedStep from "../components/create/FinishedStep";
 import ListingForm from "../components/create/listForm";
 import NftForm from "../components/create/nftForm";
 import { GlassContainer } from "../components/layout/container";
@@ -117,13 +118,11 @@ const Create = () => {
           </Stepper>
           {activeStep === steps.length ? (
             <>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All steps completed - you&apos;re finished
-              </Typography>
+              <FinishedStep />
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Box sx={{ flex: "1 1 auto" }} />
 
-                <Button onClick={handleReset}>Reset</Button>
+                <Button onClick={handleReset}>Mint More</Button>
               </Box>
             </>
           ) : (

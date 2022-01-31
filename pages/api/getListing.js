@@ -4,8 +4,8 @@ import { ethers } from "ethers";
 export default async function getAllListedNFT(req, res) {
   const rpcUrl = "https://rpc-mumbai.maticvigil.com";
   const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
-  // const MARKETPLACE_ADDRESS = "0x3Edd5980ab00A580171AcbB05696A4Eb988ba6E7";
-  const MARKETPLACE_ADDRESS = "0x229b1f789506dbea2052f8423a780b1be1c16f21";
+  const MARKETPLACE_ADDRESS = "0x3Edd5980ab00A580171AcbB05696A4Eb988ba6E7";
+  // const MARKETPLACE_ADDRESS = "0x229b1f789506dbea2052f8423a780b1be1c16f21";
 
   const wallet = new ethers.Wallet(
     privateKey,

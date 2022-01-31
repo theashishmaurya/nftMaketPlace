@@ -48,10 +48,10 @@ const RandomImage = (props) => {
       <GlassContainer sx={{ padding: "2rem" }}>
         <Image
           src={props.image}
-          alt="NftImage"
+          alt='NftImage'
           width={100}
           height={100}
-          className="image-curve"
+          className='image-curve'
         />
       </GlassContainer>
     </Box>
@@ -103,15 +103,28 @@ const HeroArea = () => {
         }}
       >
         <Typography
-          variant="h2"
-          fontWeight="bold"
-          color="#ecf0f1"
-          aling="center"
+          variant='h2'
+          fontWeight='bold'
+          color='#ecf0f1'
+          aling='center'
           sx={{ margin: "2rem 0rem" }}
         >
-          Name your one place stop for{" "}
+          <b
+            style={{
+              backgroundColor: "#e9bcb7",
+              backgroundImage:
+                "linear-gradient(315deg, #e9bcb7 20%, #29524a 74%)",
+
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            ARCANE
+          </b>{" "}
+          your one place stop for{" "}
         </Typography>
-        <Typography variant="h3" fontWeight="bold" align="center">
+        <Typography variant='h3' fontWeight='bold' align='center'>
           <TypewriterComponent
             options={{ loop: true }}
             onInit={(typewriter) => {
@@ -133,20 +146,20 @@ const HeroArea = () => {
           />
         </Typography>
       </Box>
-      <Stack gap={2} alignItems="center" margin="5rem">
-        <Typography variant="h6" align="center" fontWeight="Bold">
+      <Stack gap={2} alignItems='center' margin='5rem'>
+        <Typography variant='h6' align='center' fontWeight='Bold'>
           Get started now
         </Typography>
 
         {currentUser && (
-          <GlassButton variant="contained" size="large">
+          <GlassButton variant='contained' size='large'>
             You are connected to Marketplace
           </GlassButton>
         )}
         {!currentUser && (
           <GlassButton
-            variant="contained"
-            size="large"
+            variant='contained'
+            size='large'
             endIcon={<AccountBalanceWalletIcon />}
             onClick={handleWalletConnection}
           >
@@ -154,11 +167,11 @@ const HeroArea = () => {
           </GlassButton>
         )}
       </Stack>
-      <Stack gap={4} alignItems={"center"} margin="2rem">
-        <Typography variant="h4" fontWeight={"bold"}>
+      <Stack gap={4} alignItems={"center"} margin='2rem'>
+        <Typography variant='h4' fontWeight={"bold"}>
           What Are NFT?
         </Typography>
-        <Typography align="center">
+        <Typography align='center'>
           A non-fungible token is a non-interchangeable unit of data stored on a
           blockchain, a form of digital ledger. Types of NFT data units may be
           associated with digital files such as photos, videos, and audio.
@@ -167,10 +180,10 @@ const HeroArea = () => {
         </Typography>
       </Stack>
       <Box sx={{ margin: "4rem 0rem" }}>
-        <Typography fontWeight="bold" variant="h6" sx={{ margin: "2rem 0rem" }}>
+        <Typography fontWeight='bold' variant='h6' sx={{ margin: "2rem 0rem" }}>
           Some of Famous Nft&apos;s
         </Typography>
-        <Stack direction="row" gap={6}>
+        <Stack direction='row' gap={6}>
           {Data.map((data, index) => {
             return <RandomImage {...data} key={index} />;
           })}

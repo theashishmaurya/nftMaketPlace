@@ -2,8 +2,7 @@ import { ThirdwebSDK } from "@3rdweb/sdk";
 import { ethers } from "ethers";
 
 export default async function buyNft(req, res) {
-  // const rpcUrl = "https://rpc-mumbai.maticvigil.com";
-  const rpcUrl = "https://polygon-rpc.com/";
+  const rpcUrl = "https://rpc-mumbai.maticvigil.com";
 
   const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY;
 

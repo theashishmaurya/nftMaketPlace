@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { GlassButton } from "../../components/landingPage/heroArea";
 import { GlassContainer } from "../../components/layout/container";
+import Loader from "../../components/utils/loader";
 
 const NFTCard = () => {
   const router = useRouter();
@@ -14,6 +15,7 @@ const NFTCard = () => {
     price: null,
     symbol: "",
   });
+  const [loader, setLoader] = useState(true);
   useEffect(async () => {
     if (!router.isReady) return;
     const { id } = router.query;
@@ -40,6 +42,7 @@ const NFTCard = () => {
           price: data.buyoutCurrencyValuePerToken.displayValue,
           symbol: data.buyoutCurrencyValuePerToken.symbol,
         });
+        setLoader(false);
       })
       .catch((err) => {
         console.log(err);
@@ -55,63 +58,69 @@ const NFTCard = () => {
         alignItems: "center",
       }}
     >
-      <Box>
-        <Box sx={{ display: "flex" }}>
-          <Box>
-            <Box
-              sx={{
-                width: "35vh",
-                height: "30vh",
-                background: "rgba(255, 255, 255, 0.2)",
-                borderRadius: "4px",
-                boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-                backdropFilter: "blur(5px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                margin: "1rem 0rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img src={assetData.image} alt="img" width="100%" height="100%" />
+      {loader ? (
+        <Loader />
+      ) : (
+        <Box>
+          <Box sx={{ display: "flex" }}>
+            <Box>
+              <GlassContainer
+                sx={{
+                  padding: "2rem",
+                  width: "35vh",
+                  height: "30vh",
+                  margin: "1rem 0rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={assetData.image}
+                  alt='img'
+                  width='100%'
+                  height='100%'
+                  style={{ borderRadius: "16px" }}
+                />
+              </GlassContainer>
+            </Box>
+            <Box sx={{ margin: "0 2rem" }}>
+              <Divider orientation='vertical' />
+            </Box>
+            <Box sx={{ margin: "4rem 0rem", width: "20rem" }}>
+              <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
+                <Typography>
+                  {" "}
+                  <b>Name</b> : {assetData.name}
+                </Typography>
+              </Stack>
+              <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
+                <Typography>
+                  <b>TokenId</b> : {assetData.tokenId}
+                </Typography>
+              </Stack>
+
+              <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
+                <Typography>
+                  <b>Price : </b>
+                  {assetData.price}
+                  <s></s>
+                  {assetData.symbol}
+                </Typography>
+              </Stack>
             </Box>
           </Box>
-          <Box sx={{ margin: "0 2rem" }}>
-            <Divider orientation="vertical" />
-          </Box>
-          <Box sx={{ margin: "4rem 0rem", width: "20rem" }}>
-            <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-              <Typography>
-                {" "}
-                <b>Name</b> : {assetData.name}
-              </Typography>
-            </Stack>
-            <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-              <Typography>
-                <b>TokenId</b> : {assetData.tokenId}
-              </Typography>
-            </Stack>
 
-            <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-              <Typography>
-                <b>Price : </b>
-                {assetData.price}
-                <s></s>
-                {assetData.symbol}
-              </Typography>
-            </Stack>
-          </Box>
+          <Divider sx={{ margin: "1rem 0" }} />
+          <GlassButton
+            fullWidth
+            variant='contained'
+            sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
+          >
+            Buy
+          </GlassButton>
         </Box>
-
-        <Divider sx={{ margin: "1rem 0" }} />
-        <GlassButton
-          fullWidth
-          variant="contained"
-          sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
-        >
-          Buy
-        </GlassButton>
-      </Box>
+      )}
     </GlassContainer>
   );
 };

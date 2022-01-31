@@ -38,6 +38,10 @@ const Create = () => {
     setSkipped(newSkipped);
   };
 
+  const handleNftNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -127,7 +131,7 @@ const Create = () => {
               {activeStep === 0 ? (
                 <>
                   <Box sx={{ margin: "2rem" }}>
-                    <NftForm />
+                    <NftForm handleNftNext={handleNftNext} />
                   </Box>
                 </>
               ) : (

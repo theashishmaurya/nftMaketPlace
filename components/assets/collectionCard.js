@@ -7,36 +7,24 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { GlassContainer } from "../layout/container";
 
-export default function collectionCard(props) {
+export default function CollectionCard({ data }) {
   return (
-    <GlassContainer sx={{ maxWidth: 345 }}>
+    <GlassContainer sx={{ width: 345 }}>
       <CardMedia
+        sx={{ borderRadius: "16px 16px 0 0" }}
         component='img'
         alt='green iguana'
         height='140'
-        image='/static/images/cards/contemplative-reptile.jpg'
+        image={data.image}
       />
       <CardContent>
         <Typography gutterBottom variant='h5' component='div'>
-          Lizard
+          {data.name}
         </Typography>
         <Typography variant='body2' color='text.secondary'>
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {data.description}
         </Typography>
       </CardContent>
-      <CardActions
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Button size='small'>Buy</Button>
-        <Typography fontSize='small' color='primary' variant='button'>
-          Price : {12} eth{" "}
-        </Typography>
-      </CardActions>
     </GlassContainer>
   );
 }

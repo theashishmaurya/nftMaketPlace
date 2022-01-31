@@ -3,6 +3,8 @@ import Navbar from "../components/layout/Navbar";
 import NftCard from "../components/assets/nftCard";
 import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
+import Loader from "../components/utils/loader";
+import { GlassContainer } from "../components/layout/container";
 const { Box } = require("@mui/system");
 
 const Assets = () => {
@@ -14,7 +16,7 @@ const Assets = () => {
         return result.json();
       })
       .then((data) => {
-        // console.log(data[0].asset);
+        console.log(data);
         setMarketData(data);
       })
       .catch((err) => {
@@ -22,21 +24,27 @@ const Assets = () => {
       });
   }, []);
   return (
-    <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>
-      <Box sx={{ margin: "4rem 0" }}>
-        <Grid container spacing={10}>
-          {marketData.map((data) => {
-            return (
-              <Grid item xs={12} md={4} key={data.id}>
-                <Link href={`/nft/${data.id}`}>
-                  <NftCard key={data.id} nft={data} />
-                </Link>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
-    </Box>
+    <GlassContainer
+      sx={{ flexGrow: 1, minHeight: "100vh", margin: "4rem 0rem" }}
+    >
+      {marketData.length != 0 ? (
+        <Box sx={{ margin: "4rem 2rem" }}>
+          <Grid container spacing={10}>
+            {marketData.map((data) => {
+              return (
+                <Grid item xs={12} md={4} key={data.id}>
+                  <Link href={`/nft/${data.id}`}>
+                    <NftCard key={data.id} nft={data} />
+                  </Link>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Box>
+      ) : (
+        <Loader />
+      )}
+    </GlassContainer>
   );
 };
 

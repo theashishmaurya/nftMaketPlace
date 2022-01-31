@@ -7,7 +7,9 @@ import { useState, useEffect, useContext } from "react";
 import { UserAddressContext } from "../components/context/userContext";
 import { GlassContainer } from "../components/layout/container";
 import { LineAxisOutlined } from "@mui/icons-material";
-import collectionCard from "../components/assets/collectionCard";
+import CollectionCard from "../components/assets/collectionCard";
+import { Grid, Stack } from "@mui/material";
+
 const Profile = () => {
   const [value, setValue] = useState(0);
   const [NFTdata, setNFTData] = useState([]);
@@ -59,9 +61,9 @@ const Profile = () => {
         }}
       >
         <Image
-          className="image-circle"
-          src="/polygon.png"
-          objectFit="cover"
+          className='image-circle'
+          src='/polygon.png'
+          objectFit='cover'
           height={150}
           width={150}
         />
@@ -77,14 +79,18 @@ const Profile = () => {
         <Tabs value={value} onChange={handleChange} centered>
           {/* <Tab label='Minted Item' sx={{ margin: { md: "0 10rem" } }} />
           <Tab label='Listed Item' sx={{ margin: { md: "0 10rem" } }} /> */}
-          <Tab label="Your Collection" sx={{ margin: { md: "0 10rem" } }} />
+          <Tab label='Your Collection' sx={{ margin: { md: "0 10rem" } }} />
         </Tabs>
       </Box>
-      <Box>
+      <Grid container gap={4} sx={{ margin: "2rem" }}>
         {NFTdata.map((data, index) => {
-          <collectionCard {...data} key={index} />;
+          return (
+            <Grid key={index}>
+              <CollectionCard data={data} />
+            </Grid>
+          );
         })}
-      </Box>
+      </Grid>
     </GlassContainer>
   );
 };

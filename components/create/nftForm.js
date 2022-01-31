@@ -21,7 +21,7 @@ import { AssetContext } from "../context/assetContext";
 import { UserAddressContext } from "../context/userContext";
 import ConnectWallet from "../utils/ConnectWallet";
 import { GlassButton } from "../landingPage/heroArea";
-const NftForm = () => {
+const NftForm = ({ handleNftNext }) => {
   const [file, setFile] = useState();
   const { asset, setAsset } = useContext(AssetContext);
   // console.log(asset);
@@ -71,6 +71,7 @@ const NftForm = () => {
             image: data.image,
             tokenId: data.id,
           });
+          handleNftNext();
         })
         .catch((e) => console.log(e));
     } catch (e) {
@@ -113,14 +114,14 @@ const NftForm = () => {
           <Box sx={{ display: "flex" }}>
             <Box>
               <Typography
-                variant="h4"
-                fontWeight="bold"
+                variant='h4'
+                fontWeight='bold'
                 sx={{ margin: "1rem 0rem" }}
               >
                 Create New Item
               </Typography>
 
-              <Typography fontWeight="500" sx={{ margin: "1rem 0rem" }}>
+              <Typography fontWeight='500' sx={{ margin: "1rem 0rem" }}>
                 Image, Video, Audio, or 3D Model
               </Typography>
               <Box
@@ -139,7 +140,7 @@ const NftForm = () => {
                 }}
               >
                 {file ? (
-                  <img src={imgSrc} alt="img" width="100%" height="100%" />
+                  <img src={imgSrc} alt='img' width='100%' height='100%' />
                 ) : (
                   <Typography>Your Media Here</Typography>
                 )}
@@ -147,16 +148,16 @@ const NftForm = () => {
 
               <input
                 style={{ display: "none" }}
-                accept="image/*"
-                id="contained-button-file"
-                type="file"
+                accept='image/*'
+                id='contained-button-file'
+                type='file'
                 multiple
                 onChange={handlefileupload}
               />
-              <label htmlFor="contained-button-file">
+              <label htmlFor='contained-button-file'>
                 <GlassButton
-                  variant="contained"
-                  component="span"
+                  variant='contained'
+                  component='span'
                   sx={{ margin: "1rem 0", borderRadius: "4px" }}
                 >
                   Upload
@@ -164,7 +165,7 @@ const NftForm = () => {
               </label>
             </Box>
             <Box sx={{ margin: "0 2rem" }}>
-              <Divider orientation="vertical" />
+              <Divider orientation='vertical' />
             </Box>
             <Box
               sx={{
@@ -177,12 +178,12 @@ const NftForm = () => {
               }}
             >
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">Name</Typography>
+                <Typography fontWeight='bold'>Name</Typography>
                 <TextField
-                  variant="outlined"
-                  size="small"
+                  variant='outlined'
+                  size='small'
                   fullWidth
-                  placeholder="name"
+                  placeholder='name'
                   required
                   sx={{
                     background: "rgba(255, 255, 255, 0.2)",
@@ -197,7 +198,7 @@ const NftForm = () => {
                 />
               </Stack>
               <Stack gap={1} sx={{ margin: "1rem 0rem", flexGrow: 1 }}>
-                <Typography fontWeight="bold">Description</Typography>
+                <Typography fontWeight='bold'>Description</Typography>
 
                 <TextField
                   sx={{
@@ -208,7 +209,7 @@ const NftForm = () => {
                     border: "1px solid rgba(255, 255, 255, 0.3)",
                   }}
                   fullWidth
-                  placeholder="Description"
+                  placeholder='Description'
                   onChange={(e) => {
                     handleChange(e, "description");
                   }}
@@ -232,7 +233,7 @@ const NftForm = () => {
           <Divider sx={{ margin: "1rem 0" }} />
           <GlassButton
             onClick={handleSubmit}
-            variant="contained"
+            variant='contained'
             sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
           >
             Mint

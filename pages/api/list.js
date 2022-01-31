@@ -12,8 +12,11 @@ export default async function list(req, res) {
   //   const TOKEN_ADDRESS = "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0";  //MATIC
 
   console.log(privateKey);
+
   const { tokenOffer, tokenId } = await req.body;
+
   console.log(req.body);
+  
   const wallet = new ethers.Wallet(
     privateKey,
     ethers.getDefaultProvider(rpcUrl)

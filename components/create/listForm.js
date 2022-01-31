@@ -87,7 +87,7 @@ const ListingForm = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography>Your Media Here</Typography>
+                <img src={asset.image} alt="img" width="100%" height="100%" />
               </Box>
             </Box>
             <Box sx={{ margin: "0 2rem" }}>

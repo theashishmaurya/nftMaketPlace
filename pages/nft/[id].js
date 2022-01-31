@@ -117,7 +117,7 @@ const NFTCard = () => {
             variant='contained'
             sx={{ margin: "1rem 0rem", borderRadius: "4px" }}
           >
-            Buy
+            Buy (comming soon)
           </GlassButton>
         </Box>
       )}

@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ARCANE
+### NFT Marketplace for your digital assets.
+Well, ARCANE is an NFT marketplace where an artist can mint her/his digital content into NFT and store them on the blockchain, letting collectors purchase.
+Live demo : [ARCANE](https://nft-maket-place.vercel.app/)
 
-## Getting Started
+### 💡Inspiration
+We got inspired by amazing NFT Marketplaces like OpenSea,Rarible.
 
-First, run the development server:
+  #### Features
+  - Minting your digital asset into NFTs tokens. 
+  - Listing NFTs on marketplace for collector to collect.
+  - Digital asset will be store using IPFS file storage system.
+  
+  #### Previews
+  - Minting your digital asset after loggin into ARCANE using your crypto wallet.
+    
+    ![image](https://user-images.githubusercontent.com/39274116/151966040-30adfd7e-4f4d-4901-885c-a5d94d122ac1.png)
+    
+   - After minting NFT, lit them on market place for others to buy your unique piece of digital art.
+   
+     ![image](https://user-images.githubusercontent.com/39274116/151966243-d5b00671-3770-4061-987b-0007c9a0f2e9.png)
+    
+  ### Tech and Framework used
+   Built with
+   - This App uses Next.js as frontend
+   - thirdweb modules and sdk used for minting and list NFTs which writing solidity smart contracts.
+   - ipfs-http-client for the JavaScript HTTP RPC API client library for IPFS implementations.
+    
+    
+   ### How to Install in your local.
+   Clone this [repository](https://github.com/theashishmaurya/nftMaketPlace)
+   
+  
+### Liscense
+MIT License
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Copyright (c) 2021 Ashish maurya
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
